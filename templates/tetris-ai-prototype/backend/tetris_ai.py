@@ -25,19 +25,26 @@ class TetrisAI:
 
     @staticmethod
     def is_valid_move(board, piece, x, y):
-        """VÃ©rifie si un dÃ©placement est valide."""
+        """Vérifie si un déplacement est valide."""
         for i in range(len(piece["shape"])):
             for j in range(len(piece["shape"][i])):
                 if piece["shape"][i][j] != 0:
                     new_x = x + j
                     new_y = y + i
+                    # Vérifier si new_x ou new_y dépassent les limites
                     if (
                         new_x < 0
                         or new_x >= BOARD_WIDTH
                         or new_y >= BOARD_HEIGHT
-                        or (new_y >= 0 and board[new_y][new_x] is not None)
+                        or new_y < 0  # Éviter les indices négatifs
                     ):
                         return False
+                    # Vérifier si la case est déjà occupée
+                    if new_y < len(board) and new_x < len(board[new_y]):
+                        if board[new_y][new_x] is not None:
+                            return False
+                    else:
+                        return False  # Case hors des limites du plateau
         return True
 
     @staticmethod
@@ -89,9 +96,13 @@ class TetrisAI:
 
     @staticmethod
     def find_best_move(board, current_piece):
-        """Trouve le meilleur coup pour la piÃ¨ce actuelle."""
+        """Trouve le meilleur coup pour la pièce actuelle."""
         best_score = -float('inf')
         best_move = {"x": 0, "y": 0, "rotation": 0}
+
+        # Assurer que le plateau a bien 20 lignes
+        while len(board) < BOARD_HEIGHT:
+            board.append([None] * BOARD_WIDTH)
 
         for rotation in range(4):
             rotated_piece = current_piece
@@ -101,10 +112,11 @@ class TetrisAI:
             for x in range(BOARD_WIDTH):
                 for y in range(BOARD_HEIGHT):
                     if TetrisAI.is_valid_move(board, rotated_piece, x, y):
-                        # Simuler la chute de la piÃ¨ce
+                        # Simuler la chute de la pièce
                         current_y = y
-                        while current_y < BOARD_HEIGHT and TetrisAI.is_valid_move(
-                            board, rotated_piece, x, current_y
+                        while (
+                            current_y < BOARD_HEIGHT
+                            and TetrisAI.is_valid_move(board, rotated_piece, x, current_y)
                         ):
                             current_y += 1
                         current_y -= 1

@@ -1,6 +1,7 @@
-﻿import React, { useState, useEffect } from 'react';
-import Tetris from './Tetris';
-
+﻿import React from 'react';
+ 
+// Après (correction explicite) :
+import Tetris from './Tetris.tsx';  // <-- Ajoutez l'extension .tsx
 const App: React.FC = () => {
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>

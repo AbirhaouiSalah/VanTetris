@@ -1,6 +1,8 @@
 ﻿import unittest
 from tetris_ai import TetrisAI
 
+
+    # ... reste du code
 class TestTetrisAI(unittest.TestCase):
     def setUp(self):
         self.ai = TetrisAI()

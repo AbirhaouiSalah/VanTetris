@@ -1,9 +1,9 @@
 ﻿from flask import Flask, request, jsonify
 from flask_cors import CORS
-from tetris_ai import TetrisAI
+from tetris_ai import TetrisAI, BOARD_WIDTH, BOARD_HEIGHT  # <-- Ajoutez cette ligne
 
 app = Flask(__name__)
-CORS(app)  # Autoriser les requÃªtes cross-origin (pour React)
+CORS(app)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
@@ -11,15 +11,18 @@ def suggest():
     board = data.get('board')
     piece = data.get('piece')
 
-    # Convertir le plateau en format Python
+    # Valider que le plateau a bien 20 lignes et 10 colonnes
     python_board = []
     for row in board:
-        python_row = []
-        for cell in row:
-            python_row.append(cell if cell is not None else None)
-        python_board.append(python_row)
+        if len(row) < BOARD_WIDTH:
+            row += [None] * (BOARD_WIDTH - len(row))  # Compléter avec des None
+        python_board.append(row[:BOARD_WIDTH])  # Tronquer si trop long
 
-    # Convertir la piÃ¨ce en format Python
+    # Ajouter des lignes vides si nécessaire
+    while len(python_board) < BOARD_HEIGHT:
+        python_board.append([None] * BOARD_WIDTH)
+
+    # Convertir la pièce
     python_piece = {
         "shape": piece["shape"],
         "color": piece["color"]
