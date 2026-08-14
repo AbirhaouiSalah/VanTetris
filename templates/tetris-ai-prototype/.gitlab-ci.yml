@@ -1,0 +1,71 @@
+﻿stages:
+  - setup
+  - test
+  - build
+
+# Cache pour les dÃ©pendances Node.js et Python
+cache:
+  paths:
+    - frontend/node_modules/
+    - backend/venv/
+
+# Ã‰tape 1: Installation des dÃ©pendances
+setup_frontend:
+  stage: setup
+  image: node:18
+  script:
+    - cd frontend
+    - npm install
+  artifacts:
+    paths:
+      - frontend/node_modules/
+
+setup_backend:
+  stage: setup
+  image: python:3.10
+  script:
+    - cd backend
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+  artifacts:
+    paths:
+      - backend/venv/
+
+# Ã‰tape 2: Tests unitaires
+test_frontend:
+  stage: test
+  image: node:18
+  script:
+    - cd frontend
+    - npm test -- --watchAll=false
+
+test_backend:
+  stage: test
+  image: python:3.10
+  script:
+    - cd backend
+    - source venv/bin/activate
+    - python -m pytest tetris_ai_test.py  # Ã€ crÃ©er pour les tests
+
+# Ã‰tape 3: Build du frontend
+build_frontend:
+  stage: build
+  image: node:18
+  script:
+    - cd frontend
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/build/
+
+# Ã‰tape 4: Lancer le backend (optionnel, pour test local)
+run_backend:
+  stage: build
+  image: python:3.10
+  script:
+    - cd backend
+    - source venv/bin/activate
+    - python app.py &
+    - sleep 5  # Attendre que le serveur dÃ©marre
+    - curl -X POST http://localhost:5000/suggest -H "Content-Type: application/json" -d '{"board": [[null, null], [null, null]], "piece": {"shape": [[1, 1]], "color": "yellow"}}'
