@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VanTetris">
+<title>VanTetris</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="top">
+  <div class="stat">Score<b id="sc">0</b></div>
+  <div class="stat">Lignes<b id="ln">0</b></div>
+  <div class="stat">Niveau<b id="lv">1</b></div>
+  <canvas id="nx" width="64" height="40" style="width:64px;height:40px"></canvas>
+</div>
+<div id="wrap"><canvas id="cv"></canvas><div id="msg"><div>Game Over</div><button class="t" id="again" style="margin-top:12px">Rejouer</button></div></div>
+<div id="bar">
+  <button id="bl">◀</button><button id="br">▶</button><button id="bd">▼</button><button id="brot">⟳</button><button id="bh">⤓</button>
+</div>
+<div id="bar2" style="display:flex;gap:8px;padding:0 10px 8px">
+  <button class="t" id="hint">🤖 Suggestion</button><button class="t" id="auto">Autopilot</button><button class="t" id="rs">Restart</button>
+</div>
+<script src="src/game.js"></script>
+</body>
+</html>
