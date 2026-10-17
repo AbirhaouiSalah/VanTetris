@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VanTetris 3D">
+<title>VanTetris 3D · MUTATION</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<canvas id="gl"></canvas><div id="flash"></div><div id="lay"></div>
+<div id="top">
+  <div id="stats"><div class="stat">SCORE<b id="sc">0</b></div><div class="stat">LIGNES<b id="ln">0</b></div><div class="stat">NIV<b id="lv">1</b></div><div class="stat">COMBO<b id="cb">0</b></div><canvas id="nx" width="64" height="40" style="width:64px;height:40px"></canvas></div>
+  <div id="bars"><div>変異 MUTATION<div class="bar"><i id="mu"></i></div></div><div>上昇 MONTÉE<div class="bar"><i id="ri"></i></div></div></div>
+  <div id="ev"></div>
+</div>
+<div id="msg"><i>ゲームオーバー</i>GAME OVER<button class="t" id="again" style="margin-top:14px">Rejouer</button></div>
+<div id="bottom">
+  <div id="bar"><button id="bl">◀</button><button id="br">▶</button><button id="bd">▼</button><button id="brot">⟳</button><button id="bh">⤓</button></div>
+  <div id="bar2"><button class="t" id="hint">🤖 Suggestion</button><button class="t" id="auto">Autopilot</button><button class="t" id="rs">Restart</button><button class="t" id="snd">🔊</button></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="src/game.js"></script>
+</body>
+</html>
